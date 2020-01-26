@@ -40,14 +40,26 @@ Migrations&nbsp;
 
 Seeds&nbsp;
 
-- Ambiente de teste - População da base de dados para desenvolvimento - Muito utilizado para popular dados para testes - Executável apenas por código - Jamais será utilizado em produção - Caso sejam dados que precisam ir para produção, a própria migration pode manipular dados das tabelas
+- Ambiente de teste
+- População da base de dados para desenvolvimento
+- Muito utilizado para popular dados para testes
+- Executável apenas por código
+- Jamais será utilizado em produção
+- Caso sejam dados que precisam ir para produção, a própria migration pode manipular dados das tabelas
 
-Arquitetura MVC - MODEL -> O model armazena a abstração do banoc, utilizado para manipular os dados contidos nas tabelas do banco. Não possuem responsabilidade sobre a regra da nossa aplicação - CONTROLLER -> O controller é o ponto de entrada das requisições da nossa aplicação, uma rota geralmente está associada diretamente com um método do controller. Podemos incluir a grande parte das regras de negócio da aplicação nos controllers (conforme a aplicação cresce podemos isolar as regras). - VIEW -> A view é o retorno ao cliente, em aplicações que não utilizando o modelo de API REST isso pode ser um HTML, mas no nosso caso a view é apenas JSON que será retornado ao front-en e depois manipulado pelo **ReactJS** ou **React Native**.
+Arquitetura MVC&nbsp;
 
-    A face de um controller
-      - Classes
-      - Sempre retorna um JSON
-      - Não chama outro controller/método
-      - Quando criar um novo controller:
-        - Apenas 5 métodos
-        - Estou falando da mesma **entidade**?
+- MODEL -> O model armazena a abstração do banoc, utilizado para manipular os dados contidos nas tabelas do banco. Não possuem responsabilidade sobre a regra da nossa aplicação
+
+- CONTROLLER -> O controller é o ponto de entrada das requisições da nossa aplicação, uma rota geralmente está associada diretamente com um método do controller. Podemos incluir a grande parte das regras de negócio da aplicação nos controllers (conforme a aplicação cresce podemos isolar as regras).
+
+- VIEW -> A view é o retorno ao cliente, em aplicações que não utilizando o modelo de API REST isso pode ser um HTML, mas no nosso caso a view é apenas JSON que será retornado ao front-en e depois manipulado pelo **ReactJS** ou **React Native**.
+
+  A face de um controller &nbsp;
+
+  - Classes
+  - Sempre retorna um JSON
+  - Não chama outro controller/método
+  - Quando criar um novo controller:
+    - Apenas 5 métodos
+    - Estou falando da mesma **entidade**?
