@@ -63,3 +63,9 @@ Arquitetura MVC&nbsp;
   - Quando criar um novo controller:
     - Apenas 5 métodos
     - Estou falando da mesma **entidade**?
+
+  CRIAR sequelize
+  yarn add pg pg-hstore (criar o database.js)
+  yarn sequelize migration:create --name=create-users (criar a database no banco de dados)
+  yarn sequelize db:migrate (rodar no banco de dados)
+  yarn sequelize db:migrate:undo (para que consiga fazer alterações no meu banco de dados)
