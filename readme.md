@@ -69,3 +69,6 @@ Arquitetura MVC&nbsp;
   yarn sequelize migration:create --name=create-users (criar a database no banco de dados)
   yarn sequelize db:migrate (rodar no banco de dados)
   yarn sequelize db:migrate:undo (para que consiga fazer alterações no meu banco de dados)
+
+  criar image mongo no docker
+  docker run --name mongobarber -p 27017:27017 -d -t mongo
