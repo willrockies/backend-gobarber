@@ -5,6 +5,7 @@ import User from '../models/User';
 import Appointment from '../models/Appointment';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
+import Mail from '../../lib/Mail';
 
 class AppointmentController {
   async index(req, res) {
@@ -49,7 +50,7 @@ class AppointmentController {
       Check if provider_id is a provider
     */
     const checkIsProvider = await User.findOne({
-      where: { id: provider_id, provider: true },
+      where: { id: provider_id, provider: true, user_id: true },
     });
 
     if (!checkIsProvider) {
@@ -60,14 +61,14 @@ class AppointmentController {
 
     // TO-DO
     /* const checkIfUserIsProvider = await Appointment.findAll({
-      where: { user_id, provider_id },
+      where: { user_id: req.userId, user: true },
     });
-    if (checkIfUserIsProvider) {
+    if (checkIsProvider == checkIfUserIsProvider) {
       return res
         .status(401)
         .json({ error: 'You can not create appointment as provider' });
-    } */
-
+    }
+ */
     /* Check for past dates  */
     const hourStart = startOfHour(parseISO(date));
 
@@ -114,7 +115,15 @@ class AppointmentController {
   }
 
   async delete(req, res) {
-    const appointment = await Appointment.findByPk(req.params.id);
+    const appointment = await Appointment.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
 
     if (appointment.user_id !== req.userId) {
       return res.status(401).json({
@@ -123,10 +132,6 @@ class AppointmentController {
     }
     const dateWithSub = subHours(appointment.date, 2);
 
-    //13:00
-    //datewithSub: 11:00
-    // now 11:25
-
     if (isBefore(dateWithSub, new Date())) {
       return res.status(401).json({
         error: 'You can only cancel appointments 2 hours in advance',
@@ -134,6 +139,13 @@ class AppointmentController {
     }
     appointment.canceled_at = new Date();
     await appointment.save();
+
+    await Mail.sendMail({
+      to: `${appointment.provider.name} <${appointment.provider.email}`,
+      subject: 'Agendamento cancelado',
+      text: 'Você tem um novo cancelamento',
+    });
+
     return res.json(appointment);
   }
 }
